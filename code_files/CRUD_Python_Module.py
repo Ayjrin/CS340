@@ -6,7 +6,7 @@ from bson.objectid import ObjectId
 class AnimalShelter(object): 
     """ CRUD operations for Animal collection in MongoDB """ 
 
-    def __init__(self): 
+    def __init__(self, username: str = 'aacuser', password: str = 'shmeep'): 
         # Initializing the MongoClient. This helps to access the MongoDB 
         # databases and collections. This is hard-wired to use the aac 
         # database, the animals collection, and the aac user. 
@@ -15,8 +15,8 @@ class AnimalShelter(object):
         # 
         # Connection Variables 
         # 
-        USER = 'aacuser' 
-        PASS = 'shmeep' 
+        USER = username
+        PASS = password
         HOST = 'localhost' 
         PORT = 27017 
         DB = 'aac' 
@@ -61,3 +61,30 @@ class AnimalShelter(object):
                 return []
         else:
             raise Exception("query cannot be None -- must be valid dictionary")
+    
+    # Update method to implement the U in CRUD.
+    def update(self, query, update_data):
+        if query is not None and isinstance(query, dict):
+            if update_data is not None and isinstance(update_data, dict):
+                try:
+                    result = self.collection.update_many(query, update_data)
+                    return result.modified_count
+                except Exception as e:
+                    print(f"Update failed: {e}")
+                    return 0
+            else:
+                raise Exception("Update data cannot be None and must be a valid dictionary")
+        else:
+            raise Exception("Query cannot be None and must be a valid dictionary")
+    
+    # Delete method to implement the D in CRUD.
+    def delete(self, query):
+        if query is not None and isinstance(query, dict):
+            try:
+                result = self.collection.delete_many(query)
+                return result.deleted_count
+            except Exception as e:
+                print(f"Delete failed: {e}")
+                return 0
+        else:
+            raise Exception("Query cannot be None and must be a valid dictionary")

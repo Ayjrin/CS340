@@ -58,9 +58,84 @@ Run the Jupyter notebooks in `code_files/` to test CRUD operations:
 - `ModuleFourTestScript.ipynb`
 - `ProjectOneTestScript.ipynb`
 
-### Screenshots
-The dashboard includes interactive data tables, charts, and geolocation maps for animal shelter data.
-![notebook example](notebook.png)
+
+
+
+---
+
+## Project One - CRUD Module Documentation
+
+### CRUD Module Purpose
+The CRUD Python module provides a reusable interface for Create, Read, Update, and Delete operations on the Grazioso Salvare animal shelter MongoDB database. This module allows other Python applications to interact with the database without needing to write MongoDB queries directly, supporting code reuse across the full-stack application.
+
+### MongoDB Python Driver - PyMongo
+**Driver Used:** PyMongo
+
+**Why PyMongo:**
+- Official support from MongoDB Inc. ensures compatibility and long-term maintenance
+- Pythonic interface that works naturally with Python dictionaries
+- Comprehensive CRUD functionality using familiar MongoDB syntax
+- Well-documented with extensive community support
+
+### CRUD Operations
+
+#### CREATE Method
+Inserts a new document into the animals collection. Takes a dictionary as input and returns True if successful, False otherwise. Automatically generates a unique record number for each document.
+
+![CREATE Test](screenshots/create.png)
+
+
+#### READ Method  
+Queries documents from the animals collection using MongoDB query syntax. Takes a query dictionary as input and returns a list of matching documents (empty list if no matches).
+
+![READ Test](screenshots/read.png)
+
+
+#### UPDATE Method
+Updates one or more documents in the animals collection. Takes a query dictionary to find documents and an update dictionary with MongoDB operators (like $set). Returns the count of modified documents.
+
+![UPDATE Test](screenshots/update.png)
+
+
+#### DELETE Method
+Removes one or more documents from the animals collection. Takes a query dictionary to find documents to delete. Returns the count of deleted documents.
+
+![DELETE Test](screenshots/delete.png)
+
+
+### MongoDB Setup Screenshots
+
+#### Database Import
+Command used to import CSV data:
+```bash
+mongoimport --type=csv --db=aac --collection=animals \
+  --authenticationDatabase admin -u aacuser -p SNHU1234 \
+  --headerline --file=datasets/aac_shelter_outcomes.csv
+```
+![MongoDB Import](screenshots/mongodb_import.png)
+
+#### User Authentication
+Command used to create authenticated user:
+```mongosh
+use admin
+
+db.createUser({
+  user: "aacuser",
+  pwd: "shmeep",
+  roles: [ { role: "readWrite", db: "aac" } ]
+})
+
+exit
+mongosh -u "aacuser" -p "shmeep" --authenticationDatabase "admin"
+
+db.runCommand({connectionStatus:1})
+```
+![User Setup](screenshots/create_user.png)
+
+### CRUD Testing
+The test script (`ProjectOneTestScript.ipynb`) does all four CRUD operations with before/after verification:
+
+![Test Summary](screenshots/final_tests.png)
 
 ## Roadmap/Features
 Currently, no UI exists. I will be updating this repo to include more features in the next few weeks. 
