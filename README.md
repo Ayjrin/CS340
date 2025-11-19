@@ -109,10 +109,10 @@ Removes one or more documents from the animals collection. Takes a query diction
 Command used to import CSV data:
 ```bash
 mongoimport --type=csv --db=aac --collection=animals \
-  --authenticationDatabase admin -u aacuser -p SNHU1234 \
+  --authenticationDatabase admin -u aacuser -p shmeep \
   --headerline --file=datasets/aac_shelter_outcomes.csv
 ```
-![MongoDB Import](screenshots/mongodb_import.png)
+![MongoDB Import](screenshots/mongo_import.png)
 
 #### User Authentication
 Command used to create authenticated user:
