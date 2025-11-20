@@ -140,5 +140,72 @@ The test script (`ProjectOneTestScript.ipynb`) does all four CRUD operations wit
 ## Roadmap/Features
 Currently, no UI exists. I will be updating this repo to include more features in the next few weeks. 
 
+---
+
+## Project Two - Dashboard Reproduction
+
+Run the ProjectTwoDashboard.ipynb notebook to launch an interactive dashboard for filtering and visualizing animal shelter data.
+
+Prerequisites:
+- MongoDB running on localhost:27017 with aac database and animals collection
+- User aacuser with password shmeep
+- Grazioso Salvare Logo.png in the code_files directory
+
+Steps:
+1. Install packages: pip install pymongo dash jupyter-dash dash-leaflet plotly pandas matplotlib numpy
+2. cd into code_files/
+3. Run jupyter notebook
+4. Open ProjectTwoDashboard.ipynb and run all cells
+5. Click the link that appears to open the dashboard
+
+Dashboard features:
+- Radio buttons filter by rescue type: Water, Mountain, Disaster, or Reset
+- Data table shows filtered results, sortable and searchable
+- Pie chart shows breed distribution
+- Map shows selected animal location in Austin TX
+
+### Dashboard Screenshots
+
+![Dashboard Overview](screenshots/dashboard_top.png)
+
+![Breed Distribution Chart](screenshots/breed_distribution.png)
+
+![Geolocation Map](screenshots/dashboard_map.png)
+
+### Tools and Technologies
+
+MongoDB - Used as the database model component. MongoDB stores animal shelter data as JSON-like documents which map to Python dictionaries. This allows the CRUD module to pass query and update operations directly without difficult mapping. PyMongo provides the Python driver for connecting to MongoDB and executing queries.
+
+Dash Framework - Provides both the view and controller components of the web application. Dash uses React.js components on the frontend to render interactive data tables, charts, and maps. The callback decorators in Dash serve as controllers that handle user interactions and update the UI components in response to filter selections and table row clicks.
+
+Plotly - Creates the interactive pie chart visualization showing breed distribution.
+
+Dash Leaflet - Renders the interactive map component displaying animal locations in Austin.
+
+Pandas - Handles data manipulation and conversion between MongoDB results and dataframes for visualization.
+
+JupyterDash - Allows the Dash application to run within a Jupyter notebook environment.
+
+Resources used:
+- https://dash.plotly.com/
+- https://pymongo.readthedocs.io/
+- https://www.mongodb.com/docs/
+- https://plotly.com/python/
+- https://www.dash-leaflet.com/
+
+### Development Process
+
+The project was completed in assignments -- First, the CRUD module was built to handle all database operations with MongoDB. This included implementing create, read, update, and delete methods with proper error handling and input validation. The module was tested using test in jupyter scripts to verify each operation worked correctly.
+
+Second, the dashboard was built using Dash framework. The layout was designed with radio buttons for filtering, a data table for displaying results, a pie chart for breed distribution, and a map for geolocation. Callbacks were implemented to connect user interactions to database queries and UI updates. The filter logic was implemented using MongoDB query operators to match the rescue type requirements provided by Grazioso Salvare.
+
+### Challenges
+
+One challenge was handling empty or missing data when filters returned no results. This was solved by adding conditional checks in the callback functions to return empty lists or default values when the dataframe was empty.
+
+Another challenge was ensuring the map updated correctly when users selected different rows in the table. The derived_virtual_selected_rows input was used to track which row the user clicked, and bounds checking was added to prevent index errors if the selection was out of range after filtering.
+
+Getting the pie chart to display properly with many breed categories required adjusting the figure height and legend positioning so all breeds were visible without overlapping and took a lot of troubleshooting and Googling.
+
 ## Contact
 Adrian Tull
